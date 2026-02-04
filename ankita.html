@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>💖 For You 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+* { box-sizing: border-box; font-family: "Segoe UI", sans-serif; }
+
+body {
+  margin: 0;
+  height: 100vh;
+  background: url("https://drive.google.com/file/d/1froZ-YbRX9JbNmlyNdObWjNbLBmhBQu7/download?usp=sharing") center/cover no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.overlay {
+  background: rgba(0,0,0,0.65);
+  padding: 25px;
+  border-radius: 20px;
+  text-align: center;
+  color: white;
+  width: min(90%, 420px);
+  animation: fadeIn 1.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+h1 { font-size: 2rem; margin-bottom: 10px; }
+p { margin-bottom: 20px; }
+
+.buttons { position: relative; height: 90px; }
+
+button {
+  padding: 14px 26px;
+  font-size: 1.1rem;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+}
+
+#yesBtn { background: #ff4d6d; color: white; }
+#noBtn { background: #ddd; position: absolute; }
+
+#result { margin-top: 20px; font-size: 1.6rem; }
+
+canvas { position: fixed; inset: 0; pointer-events: none; }
+
+.heart {
+  position: fixed;
+  bottom: 0;
+  font-size: 24px;
+  animation: floatUp 4s linear forwards;
+}
+
+@keyframes floatUp {
+  to { transform: translateY(-100vh); opacity: 0; }
+}
+
+.ring {
+  font-size: 80px;
+  animation: pop 1s ease forwards;
+}
+
+@keyframes pop {
+  from { transform: scale(0); }
+  to { transform: scale(1); }
+}
+
+.slideshow img {
+  width: 100%;
+  border-radius: 15px;
+  display: none;
+}
+</style>
+</head>
+
+<body>
+  <img
+  src="https://drive.google.com/uc?export=download&id=1konSWej_69fuv8ZZGp9bvh3nIlGcGeem"
+  style="width:300px"
+>
+
+
+<canvas id="effects"></canvas>
+
+<div class="overlay">
+  <h1>HER_NAME 💖</h1>
+  <p>Every moment with you is my favorite.</p>
+
+  <div class="slideshow">
+    <img src="SLIDE_1_URL">
+    <img src="SLIDE_2_URL">
+    <img src="SLIDE_3_URL">
+  </div>
+
+  <div class="buttons">
+    <button id="yesBtn">Yes ❤️</button>
+    <button id="noBtn">No 💔</button>
+  </div>
+
+  <div id="result"></div>
+</div>
+
+<audio id="music" loop>
+  <source src="ROMANTIC_MUSIC_URL_HERE" type="audio/mpeg">
+</audio>
+
+<script>
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const result = document.getElementById("result");
+const music = document.getElementById("music");
+const slides = document.querySelectorAll(".slideshow img");
+const canvas = document.getElementById("effects");
+const ctx = canvas.getContext("2d");
+
+canvas.width = innerWidth;
+canvas.height = innerHeight;
+
+// No button escape
+noBtn.addEventListener("mouseover", () => {
+  noBtn.style.transform =
+    `translate(${Math.random()*300-150}px,${Math.random()*150-75}px)`;
+});
+
+// Slideshow
+let slideIndex = 0;
+slides[0].style.display = "block";
+setInterval(() => {
+  slides[slideIndex].style.display = "none";
+  slideIndex = (slideIndex + 1) % slides.length;
+  slides[slideIndex].style.display = "block";
+}, 2500);
+
+// Yes button magic
+yesBtn.onclick = () => {
+  music.play();
+  result.innerHTML = "💍 Will you be with me forever?";
+  launchRing();
+  hearts();
+  fireworks();
+};
+
+// Ring
+function launchRing() {
+  const ring = document.createElement("div");
+  ring.className = "ring";
+  ring.innerHTML = "💍";
+  result.appendChild(ring);
+}
+
+// Hearts
+function hearts() {
+  setInterval(() => {
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.innerHTML = "❤️";
+    h.style.left = Math.random()*100 + "vw";
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 4000);
+  }, 300);
+}
+
+// Fireworks
+function fireworks() {
+  let particles = [];
+  for (let i = 0; i < 250; i++) {
+    particles.push({
+      x: canvas.width/2,
+      y: canvas.height/2,
+      vx: (Math.random()-0.5)*8,
+      vy: (Math.random()-0.5)*8,
+      life: 100,
+      color: `hsl(${Math.random()*360},100%,60%)`
+    });
+  }
+
+  function animate() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    particles.forEach(p => {
+      ctx.fillStyle = p.color;
+      ctx.fillRect(p.x,p.y,3,3);
+      p.x += p.vx;
+      p.y += p.vy;
+      p.life--;
+    });
+    particles = particles.filter(p => p.life > 0);
+    if (particles.length) requestAnimationFrame(animate);
+  }
+  animate();
+}
+</script>
+
+</body>
+</html>
