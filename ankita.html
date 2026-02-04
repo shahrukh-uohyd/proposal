@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>💖 Valentine 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+* {
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  background: url("https://raw.githubusercontent.com/shahrukh-uohyd/proposal/62923edd0c39b4a5b6d685d562815823ec1ff39c/images/background.jpg") center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Initial question */
+#question {
+  background: rgba(0,0,0,0.6);
+  padding: 30px;
+  border-radius: 20px;
+  text-align: center;
+  color: white;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 25px;
+}
+
+.buttons {
+  position: relative;
+  height: 80px;
+}
+
+button {
+  padding: 14px 28px;
+  font-size: 1.1rem;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+}
+
+#yesBtn {
+  background: #ff4d6d;
+  color: white;
+}
+
+#noBtn {
+  background: #ddd;
+  position: absolute;
+}
+
+/* Slideshow */
+#slideshow {
+  display: none;
+  position: fixed;
+  inset: 0;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+.slide.active {
+  opacity: 1;
+}
+
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.caption {
+  position: absolute;
+  bottom: 15%;
+  width: 100%;
+  text-align: center;
+  color: white;
+  font-size: 1.8rem;
+  background: rgba(0,0,0,0.5);
+  padding: 15px;
+}
+.heart {
+  color: #ff4d6d;
+  font-size: 1.4rem;
+}
+
+.broken {
+  color: #555;
+  font-size: 1.2rem;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- QUESTION SCREEN -->
+<div id="question">
+  <h1>Will you be my Valentine?</h1>
+
+  <div class="buttons">
+    <button id="yesBtn">
+  Yes <span class="heart"></span>
+</button>
+
+<button id="noBtn">
+  No <span class="broken"></span>
+</button>
+
+  </div>
+</div>
+
+<!-- SLIDESHOW -->
+<div id="slideshow">
+  <div class="slide active">
+    <img src="https://raw.githubusercontent.com/shahrukh-uohyd/proposal/62923edd0c39b4a5b6d685d562815823ec1ff39c/images/f1.jpg">
+    <div class="caption">Yeah...... I knew it, I knew it Ankita that its going to be a YES.</div>
+  </div>
+
+  <div class="slide">
+    <img src="https://raw.githubusercontent.com/shahrukh-uohyd/proposal/62923edd0c39b4a5b6d685d562815823ec1ff39c/images/f2.jpg">
+    <div class="caption">From the first day itself, you felt special to me.
+And now you’re even more special, because you said yes.
+</div>
+  </div>
+
+  <div class="slide">
+    <img src="https://raw.githubusercontent.com/shahrukh-uohyd/proposal/62923edd0c39b4a5b6d685d562815823ec1ff39c/images/f3.jpg">
+    <div class="caption">I want to make countless memories with you,
+and carry them with me for the rest of my life.
+</div>
+  </div>
+
+  <div class="slide">
+    <img src="https://raw.githubusercontent.com/shahrukh-uohyd/proposal/62923edd0c39b4a5b6d685d562815823ec1ff39c/images/f4.jpg">
+    <div class="caption">Love You, Bahot Sara....</div>
+  </div>
+</div>
+
+<script>
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const question = document.getElementById("question");
+const slideshow = document.getElementById("slideshow");
+const slides = document.querySelectorAll(".slide");
+
+// Runaway No button
+noBtn.addEventListener("mouseover", () => {
+  const x = Math.random() * 250 - 125;
+  const y = Math.random() * 120 - 60;
+  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+});
+
+// Yes button → start slideshow
+yesBtn.addEventListener("click", () => {
+  question.style.display = "none";
+  document.body.style.background = "black";
+  slideshow.style.display = "block";
+  startSlideshow();
+});
+
+// Slideshow logic
+let index = 0;
+function startSlideshow() {
+  setInterval(() => {
+    slides[index].classList.remove("active");
+    index = (index + 1) % slides.length;
+    slides[index].classList.add("active");
+  }, 3500);
+}
+</script>
+
+</body>
+</html>
